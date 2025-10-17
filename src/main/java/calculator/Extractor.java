@@ -19,4 +19,16 @@ public class Extractor {
         }
         return delimiters;
     }
+
+    public Integer[] extractNumbers(String input) {
+        if(input.isEmpty()){
+            return new Integer[]{};
+        }
+        String[] numberStrings = input.split("\\D+");
+        Integer[] numbers = new Integer[numberStrings.length];
+        for(int i=0;i<numberStrings.length;i++){
+            numbers[i] = Integer.parseInt(numberStrings[i]);
+        }
+        return numbers;
+    }
 }
