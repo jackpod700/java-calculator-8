@@ -19,7 +19,7 @@ class ApplicationTest extends NsTest {
     }
 
     @Test
-    void 숫자_하나(){
+    void 단일_숫자(){
         assertSimpleTest(() -> {
             run("1");
             assertThat(output()).contains("결과 : 1");
@@ -27,7 +27,7 @@ class ApplicationTest extends NsTest {
     }
 
     @Test
-    void 숫자_및_기본_구분자_사용(){
+    void 복수_숫자_및_기본_구분자_사용(){
         assertSimpleTest(() -> {
             run("1,2;3");
             assertThat(output()).contains("결과 : 6");
@@ -36,7 +36,7 @@ class ApplicationTest extends NsTest {
 
     //성공 테스트 케이스(커스텀 구분자 O)
     @Test
-    void 커스텀_구분자_하나() {
+    void 단일_커스텀_구분자() {
         assertSimpleTest(() -> {
             run("//;\\n1");
             assertThat(output()).contains("결과 : 1");
@@ -44,7 +44,7 @@ class ApplicationTest extends NsTest {
     }
 
     @Test
-    void 커스텀_구분자_여러개() {
+    void 복수_커스텀_구분자() {
         assertSimpleTest(() -> {
             run("//|\\n//e\\n1e2|3,4;5");
             assertThat(output()).contains("결과 : 15");
