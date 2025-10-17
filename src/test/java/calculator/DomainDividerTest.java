@@ -6,6 +6,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+/**
+ * DomainDivider 클래스의 단위 테스트를 담당하는 클래스
+ * 다양한 입력 시나리오에 대해 divideDomain() 메서드를 실행하고, 예상되는 출력 결과를 검증한다.
+ */
 public class DomainDividerTest {
     private DomainDivider domainDivider;
 

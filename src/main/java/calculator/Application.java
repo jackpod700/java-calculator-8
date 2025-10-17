@@ -1,4 +1,5 @@
 package calculator;
+
 import camp.nextstep.edu.missionutils.Console;
 import java.util.HashSet;
 
@@ -16,7 +17,7 @@ public class Application {
         String[] domains = domainDivider.divideDomain(userInput);
 
         // 2. 커스텀 구분자 영역 검증
-        if(!verifier.verifyCustomDelimiterDomain(domains[0])){
+        if (!verifier.verifyCustomDelimiterDomain(domains[0])) {
             throw new IllegalArgumentException();
         }
 
@@ -24,7 +25,7 @@ public class Application {
         HashSet<String> delimiters = extractor.extractCustomDelimiter(domains[0]);
 
         // 4. 숫자 및 구분자 영역 검증
-        if(!verifier.verifyNumberAndDelimiterDomain(domains[1], delimiters)){
+        if (!verifier.verifyNumberAndDelimiterDomain(domains[1], delimiters)) {
             throw new IllegalArgumentException();
         }
 
@@ -33,7 +34,7 @@ public class Application {
 
         // 6. 덧셈 계산 및 출력
         int sum = 0;
-        for(int number : numbers){
+        for (int number : numbers) {
             sum += number;
         }
         System.out.println("결과 : " + sum);

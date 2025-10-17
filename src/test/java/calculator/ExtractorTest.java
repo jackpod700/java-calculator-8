@@ -8,7 +8,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-//이미 검증이 완료된 입력값만 받으므로 잘못된 형식에 대한 테스트는 필요 없음
+/**
+ * Extractor 클래스의 단위 테스트를 담당하는 클래스
+ * 다양한 입력 시나리오에 대해 extractCustomDelimiter() 및 extractNumbers() 메서드를 실행하고, 예상되는 출력 결과를 검증한다.
+ * Verifier 거치고 사용되기 때문에 검증이 완료된 입력값만을 사용한다.
+ */
 public class ExtractorTest {
 
     private Extractor extractor;
@@ -32,7 +36,7 @@ public class ExtractorTest {
         HashSet<String> expected = new HashSet<>();
         expected.add(",");
         expected.add(";");
-        assert(result.equals(expected));
+        assert (result.equals(expected));
     }
 
     @Test
@@ -50,7 +54,7 @@ public class ExtractorTest {
         expected.add(",");
         expected.add("@");
 
-        assert(result.equals(expected));
+        assert (result.equals(expected));
     }
 
     @Test
@@ -69,7 +73,7 @@ public class ExtractorTest {
         expected.add("add");
         expected.add("@");
 
-        assert(result.equals(expected));
+        assert (result.equals(expected));
     }
 
     //숫자 추출 테스트
@@ -105,11 +109,11 @@ public class ExtractorTest {
     @DisplayName("숫자 추출 - 다중 숫자")
     void extractNumbersMultipleNumbers() {
         // given
-        String[] input = new String[]{"1,2;3,4","1,2;3add4"};
+        String[] input = new String[]{"1,2;3,4", "1,2;3add4"};
 
         // when & then
-        Integer[] expected = new Integer[]{1,2,3,4};
-        for(String in : input){
+        Integer[] expected = new Integer[]{1, 2, 3, 4};
+        for (String in : input) {
             Integer[] result = extractor.extractNumbers(in);
             assert Arrays.equals(result, expected);
         }

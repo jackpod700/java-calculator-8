@@ -5,6 +5,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Verifier 클래스의 단위 테스트를 담당하는 클래스
+ * 다양한 입력 시나리오에 대해 verifyCustomDelimiterDomain() 및 verifyNumberAndDelimiterDomain() 메서드를 실행하고,
+ * 예상되는 출력 결과를 검증한다.
+ */
 public class VerifierTest {
     private Verifier verifier;
 
@@ -13,7 +18,7 @@ public class VerifierTest {
         verifier = new Verifier();
     }
 
-    //커스텀 구분자 영역 검증 테스트
+    /** 커스텀 구분자 영역 검증 테스트 */
     @Test
     @DisplayName("커스텀 구분자 영역 올바른 형식 - 빈 문자열")
     void customVerifyEmptyString() {
@@ -24,22 +29,22 @@ public class VerifierTest {
         boolean result = verifier.verifyCustomDelimiterDomain(input);
 
         // then
-        assert(result);
+        assert (result);
     }
 
     @Test
     @DisplayName("커스텀 구분자 영역 올바른 형식")
     void customVerifyCorrectFormat() {
         // given
-        String[] inputs = new String[]{"//#\\n","//#\\n//@\\n","///\\n"};
+        String[] inputs = new String[]{"//#\\n", "//#\\n//@\\n", "///\\n"};
         // when
         boolean result = true;
-        for(String in : inputs){
+        for (String in : inputs) {
             result &= verifier.verifyCustomDelimiterDomain(in);
         }
 
         // then
-        assert(result);
+        assert (result);
     }
 
     @Test
@@ -52,7 +57,7 @@ public class VerifierTest {
         boolean result = verifier.verifyCustomDelimiterDomain(input);
 
         // then
-        assert(!result);
+        assert (!result);
     }
 
     @Test
@@ -65,23 +70,23 @@ public class VerifierTest {
         boolean result = verifier.verifyCustomDelimiterDomain(input);
 
         // then
-        assert(!result);
+        assert (!result);
     }
 
     @Test
     @DisplayName("커스텀 구분자 영역 잘못된 형식 - 허용되지 않는 구분자 등록(숫자)")
     void customVerifyIncorrectFormatNumberDelimiter() {
         // given
-        String[] inputs = new String[]{"//12\\n","//;\\n1;2\\n"};
+        String[] inputs = new String[]{"//12\\n", "//;\\n1;2\\n"};
 
         // when
         boolean result = false;
-        for(String in : inputs){
+        for (String in : inputs) {
             result |= verifier.verifyCustomDelimiterDomain(in);
         }
 
         // then
-        assert(!result);
+        assert (!result);
     }
 
     @Test
@@ -94,7 +99,7 @@ public class VerifierTest {
         boolean result = verifier.verifyCustomDelimiterDomain(input);
 
         // then
-        assert(!result);
+        assert (!result);
     }
 
     @Test
@@ -107,10 +112,10 @@ public class VerifierTest {
         boolean result = verifier.verifyCustomDelimiterDomain(input);
 
         // then
-        assert(!result);
+        assert (!result);
     }
 
-    //숫자 및 구분자 영역 테스트
+    /** 숫자 및 구분자 영역 테스트 */
     @Test
     @DisplayName("숫자 및 구분자 영역 올바른 형식 - 빈 문자열")
     void numberAndDelimiterVerifyEmptyString() {
@@ -124,26 +129,26 @@ public class VerifierTest {
         boolean result = verifier.verifyNumberAndDelimiterDomain(input, delimiters);
 
         // then
-        assert(result);
+        assert (result);
     }
 
     @Test
     @DisplayName("숫자 및 구분자 영역 올바른 형식")
     void numberAndDelimiterVerifyCorrectFormat() {
         // given
-        String[] inputs = new String[]{"1,2;3","10;20","100"};
+        String[] inputs = new String[]{"1,2;3", "10;20", "100"};
         HashSet<String> delimiters = new HashSet<>();
         delimiters.add(",");
         delimiters.add(";");
 
         // when
         boolean result = true;
-        for(String in : inputs){
+        for (String in : inputs) {
             result &= verifier.verifyNumberAndDelimiterDomain(in, delimiters);
         }
 
         // then
-        assert(result);
+        assert (result);
     }
 
     @Test
@@ -159,25 +164,25 @@ public class VerifierTest {
         boolean result = verifier.verifyNumberAndDelimiterDomain(input, delimiters);
 
         // then
-        assert(!result);
+        assert (!result);
     }
 
     @Test
     @DisplayName("숫자 및 구분자 영역 잘못된 형식 - 잘못된 구분자 위치")
     void numberAndDelimiterVerifyInvalidFormatDelimiterPosition() {
         // given
-        String[] inputs = new String[]{"1,2;3,",";1,2,3","1,2,,3","1,2,;3"};
+        String[] inputs = new String[]{"1,2;3,", ";1,2,3", "1,2,,3", "1,2,;3"};
         HashSet<String> delimiters = new HashSet<>();
         delimiters.add(",");
         delimiters.add(";");
 
         // when
         boolean result = false;
-        for(String in : inputs){
+        for (String in : inputs) {
             result |= verifier.verifyNumberAndDelimiterDomain(in, delimiters);
         }
 
         // then
-        assert(!result);
+        assert (!result);
     }
 }
