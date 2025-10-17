@@ -1,5 +1,8 @@
 package calculator;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+
+import java.util.Arrays;
 import java.util.HashSet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -69,5 +72,46 @@ public class ExtractorTest {
         assert(result.equals(expected));
     }
 
+    //숫자 추출 테스트
+    @Test
+    @DisplayName("숫자 추출 - 빈 문자열")
+    void extractNumbersEmptyString() {
+        // given
+        String input = "";
 
+        // when
+        Integer[] result = extractor.extractNumbers(input);
+
+        // then
+        Integer[] expected = new Integer[]{};
+        assertArrayEquals(expected, result);
+    }
+
+    @Test
+    @DisplayName("숫자 추출 - 단일 숫자")
+    void extractNumbersSingleNumber() {
+        // given
+        String input = "123";
+
+        // when
+        Integer[] result = extractor.extractNumbers(input);
+
+        // then
+        Integer[] expected = new Integer[]{123};
+        assertArrayEquals(expected, result);
+    }
+
+    @Test
+    @DisplayName("숫자 추출 - 다중 숫자")
+    void extractNumbersMultipleNumbers() {
+        // given
+        String[] input = new String[]{"1,2;3,4","1,2;3add4"};
+
+        // when & then
+        Integer[] expected = new Integer[]{1,2,3,4};
+        for(String in : input){
+            Integer[] result = extractor.extractNumbers(in);
+            assert Arrays.equals(result, expected);
+        }
+    }
 }
