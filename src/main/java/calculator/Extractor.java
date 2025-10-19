@@ -1,5 +1,6 @@
 package calculator;
 
+import calculator.common.enums.CustomDelimiterSyntax;
 import java.util.HashSet;
 
 /**
@@ -8,6 +9,12 @@ import java.util.HashSet;
  * Verifier를 통해 검증이 완료된 입력값을 받아 커스텀 구분자와 숫자를 추출한다.
  * */
 public class Extractor {
+    private static final String PREFIX = CustomDelimiterSyntax.PREFIX.getValue();
+    private static final String SUFFIX = CustomDelimiterSyntax.SUFFIX.getValue();
+    private static final int PREFIX_LENGTH = PREFIX.length();
+    private static final int SUFFIX_LENGTH = SUFFIX.length();
+
+
     /**
      * 커스텀 구분자 추출 메서드
      *
@@ -22,11 +29,11 @@ public class Extractor {
 
         int currentIndex = 0;
         while (currentIndex < input.length()) {
-            int nextOpenIndex = input.indexOf("//", currentIndex);
-            int nextCloseIndex = input.indexOf("\\n", nextOpenIndex);
-            String newDelimiter = input.substring(nextOpenIndex + 2, nextCloseIndex);
+            int nextOpenIndex = input.indexOf(PREFIX, currentIndex);
+            int nextCloseIndex = input.indexOf(SUFFIX, nextOpenIndex);
+            String newDelimiter = input.substring(nextOpenIndex + PREFIX_LENGTH, nextCloseIndex);
             delimiters.add(newDelimiter);
-            currentIndex = nextCloseIndex + 2;
+            currentIndex = nextCloseIndex + SUFFIX_LENGTH;
         }
         return delimiters;
     }
