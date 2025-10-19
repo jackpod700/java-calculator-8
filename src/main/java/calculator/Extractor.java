@@ -1,6 +1,7 @@
 package calculator;
 
 import calculator.common.enums.CustomDelimiterSyntax;
+import calculator.common.enums.DefaultDelimiter;
 import java.util.HashSet;
 
 /**
@@ -23,9 +24,7 @@ public class Extractor {
      * @return HashSet<String> 추출된 구분자 집합
      * */
     public HashSet<String> extractCustomDelimiter(String input) {
-        HashSet<String> delimiters = new HashSet<>();
-        delimiters.add(","); // 기본 구분자 추가
-        delimiters.add(":"); // 기본 구분자 추가
+        HashSet<String> delimiters = DefaultDelimiter.getDefaultDelimiters();
 
         int currentIndex = 0;
         while (currentIndex < input.length()) {

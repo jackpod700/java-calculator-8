@@ -2,6 +2,7 @@ package calculator;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
+import calculator.common.enums.DefaultDelimiter;
 import java.util.Arrays;
 import java.util.HashSet;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,9 +34,7 @@ public class ExtractorTest {
         HashSet<String> result = extractor.extractCustomDelimiter(input);
 
         // then
-        HashSet<String> expected = new HashSet<>();
-        expected.add(",");
-        expected.add(":");
+        HashSet<String> expected = DefaultDelimiter.getDefaultDelimiters();
         assert (result.equals(expected));
     }
 
@@ -49,9 +48,7 @@ public class ExtractorTest {
         HashSet<String> result = extractor.extractCustomDelimiter(input);
 
         // then
-        HashSet<String> expected = new HashSet<>();
-        expected.add(":");
-        expected.add(",");
+        HashSet<String> expected = DefaultDelimiter.getDefaultDelimiters();
         expected.add("@");
 
         assert (result.equals(expected));
@@ -67,9 +64,7 @@ public class ExtractorTest {
         HashSet<String> result = extractor.extractCustomDelimiter(input);
 
         // then
-        HashSet<String> expected = new HashSet<>();
-        expected.add(";");
-        expected.add(",");
+        HashSet<String> expected = DefaultDelimiter.getDefaultDelimiters();
         expected.add("add");
         expected.add("@");
 

@@ -1,5 +1,6 @@
 package calculator;
 
+import calculator.common.enums.DefaultDelimiter;
 import java.util.HashSet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -121,9 +122,7 @@ public class VerifierTest {
     void numberAndDelimiterVerifyEmptyString() {
         // given
         String input = "";
-        HashSet<String> delimiters = new HashSet<>();
-        delimiters.add(",");
-        delimiters.add(":");
+        HashSet<String> delimiters = DefaultDelimiter.getDefaultDelimiters();
 
         // when
         boolean result = verifier.verifyNumberAndDelimiterDomain(input, delimiters);
@@ -137,9 +136,7 @@ public class VerifierTest {
     void numberAndDelimiterVerifyCorrectFormat() {
         // given
         String[] inputs = new String[]{"1,2:3", "10:20", "100"};
-        HashSet<String> delimiters = new HashSet<>();
-        delimiters.add(",");
-        delimiters.add(":");
+        HashSet<String> delimiters = DefaultDelimiter.getDefaultDelimiters();
 
         // when
         boolean result = true;
@@ -156,9 +153,7 @@ public class VerifierTest {
     void numberAndDelimiterVerifyInvalidFormatChar() {
         // given
         String input = "1,2#3";
-        HashSet<String> delimiters = new HashSet<>();
-        delimiters.add(",");
-        delimiters.add(":");
+        HashSet<String> delimiters = DefaultDelimiter.getDefaultDelimiters();
 
         // when
         boolean result = verifier.verifyNumberAndDelimiterDomain(input, delimiters);
@@ -172,9 +167,7 @@ public class VerifierTest {
     void numberAndDelimiterVerifyInvalidFormatDelimiterPosition() {
         // given
         String[] inputs = new String[]{"1,2:3,", ":1,2,3", "1,2,,3", "1,2,:3"};
-        HashSet<String> delimiters = new HashSet<>();
-        delimiters.add(",");
-        delimiters.add(":");
+        HashSet<String> delimiters = DefaultDelimiter.getDefaultDelimiters();
 
         // when
         boolean result = false;
