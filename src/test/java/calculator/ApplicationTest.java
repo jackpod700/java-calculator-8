@@ -1,11 +1,11 @@
 package calculator;
 
-import camp.nextstep.edu.missionutils.test.NsTest;
-import org.junit.jupiter.api.Test;
-
 import static camp.nextstep.edu.missionutils.test.Assertions.assertSimpleTest;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import camp.nextstep.edu.missionutils.test.NsTest;
+import org.junit.jupiter.api.Test;
 
 /**
  * Application 클래스의 통합 테스트를 담당하는 클래스 다양한 입력 시나리오에 대해 Application.main() 메서드를 실행하고, 예상되는 출력 결과 또는 예외 발생 여부를 검증한다.
@@ -34,7 +34,7 @@ class ApplicationTest extends NsTest {
     @Test
     void 복수_숫자_및_기본_구분자_사용() {
         assertSimpleTest(() -> {
-            run("1,2;3");
+            run("1,2:3");
             assertThat(output()).contains("결과 : 6");
         });
     }
@@ -51,7 +51,7 @@ class ApplicationTest extends NsTest {
     @Test
     void 복수_커스텀_구분자() {
         assertSimpleTest(() -> {
-            run("//|\\n//e\\n1e2|3,4;5");
+            run("//|\\n//e\\n1e2|3,4:5");
             assertThat(output()).contains("결과 : 15");
         });
     }
@@ -70,7 +70,7 @@ class ApplicationTest extends NsTest {
     @Test
     void 구분자_위치_오류() {
         assertSimpleTest(() ->
-                assertThatThrownBy(() -> runException("1,2;3,"))
+                assertThatThrownBy(() -> runException("1,2:3,"))
                         .isInstanceOf(IllegalArgumentException.class)
         );
     }
@@ -79,7 +79,7 @@ class ApplicationTest extends NsTest {
     @Test
     void 커스텀_구분자_등록_시작_오류() {
         assertSimpleTest(() ->
-                assertThatThrownBy(() -> runException("#//$\\n1,2;3"))
+                assertThatThrownBy(() -> runException("#//$\\n1,2:3"))
                         .isInstanceOf(IllegalArgumentException.class)
         );
     }
@@ -104,7 +104,7 @@ class ApplicationTest extends NsTest {
     void 커스텀_구분자_등록_불가값_시도1() {
         // "//"는 구분자로 등록 불가
         assertSimpleTest(() ->
-                assertThatThrownBy(() -> runException("////\\n1,2;3"))
+                assertThatThrownBy(() -> runException("////\\n1,2:3"))
                         .isInstanceOf(IllegalArgumentException.class)
         );
     }
@@ -113,7 +113,7 @@ class ApplicationTest extends NsTest {
     void 커스텀_구분자_등록_불가값_시도2() {
         // "\n"는 구분자로 등록 불가
         assertSimpleTest(() ->
-                assertThatThrownBy(() -> runException("//\\n\\n1,2;3"))
+                assertThatThrownBy(() -> runException("//\\n\\n1,2:3"))
                         .isInstanceOf(IllegalArgumentException.class)
         );
     }

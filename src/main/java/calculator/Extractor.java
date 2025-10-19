@@ -11,14 +11,14 @@ public class Extractor {
     /**
      * 커스텀 구분자 추출 메서드
      *
-     * 기본 구분자인 , ; 에 커스텀 구분자를 더하여 HashSet으로 반환한다.
+     * 기본 구분자인 , : 에 커스텀 구분자를 더하여 HashSet으로 반환한다.
      * @param input 커스텀 구분자 영역 문자열
      * @return HashSet<String> 추출된 구분자 집합
      * */
     public HashSet<String> extractCustomDelimiter(String input) {
         HashSet<String> delimiters = new HashSet<>();
         delimiters.add(","); // 기본 구분자 추가
-        delimiters.add(";"); // 기본 구분자 추가
+        delimiters.add(":"); // 기본 구분자 추가
 
         int currentIndex = 0;
         while (currentIndex < input.length()) {

@@ -123,7 +123,7 @@ public class VerifierTest {
         String input = "";
         HashSet<String> delimiters = new HashSet<>();
         delimiters.add(",");
-        delimiters.add(";");
+        delimiters.add(":");
 
         // when
         boolean result = verifier.verifyNumberAndDelimiterDomain(input, delimiters);
@@ -136,10 +136,10 @@ public class VerifierTest {
     @DisplayName("숫자 및 구분자 영역 올바른 형식")
     void numberAndDelimiterVerifyCorrectFormat() {
         // given
-        String[] inputs = new String[]{"1,2;3", "10;20", "100"};
+        String[] inputs = new String[]{"1,2:3", "10:20", "100"};
         HashSet<String> delimiters = new HashSet<>();
         delimiters.add(",");
-        delimiters.add(";");
+        delimiters.add(":");
 
         // when
         boolean result = true;
@@ -158,7 +158,7 @@ public class VerifierTest {
         String input = "1,2#3";
         HashSet<String> delimiters = new HashSet<>();
         delimiters.add(",");
-        delimiters.add(";");
+        delimiters.add(":");
 
         // when
         boolean result = verifier.verifyNumberAndDelimiterDomain(input, delimiters);
@@ -171,10 +171,10 @@ public class VerifierTest {
     @DisplayName("숫자 및 구분자 영역 잘못된 형식 - 잘못된 구분자 위치")
     void numberAndDelimiterVerifyInvalidFormatDelimiterPosition() {
         // given
-        String[] inputs = new String[]{"1,2;3,", ";1,2,3", "1,2,,3", "1,2,;3"};
+        String[] inputs = new String[]{"1,2:3,", ":1,2,3", "1,2,,3", "1,2,:3"};
         HashSet<String> delimiters = new HashSet<>();
         delimiters.add(",");
-        delimiters.add(";");
+        delimiters.add(":");
 
         // when
         boolean result = false;

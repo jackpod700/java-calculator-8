@@ -35,7 +35,7 @@ public class ExtractorTest {
         // then
         HashSet<String> expected = new HashSet<>();
         expected.add(",");
-        expected.add(";");
+        expected.add(":");
         assert (result.equals(expected));
     }
 
@@ -50,7 +50,7 @@ public class ExtractorTest {
 
         // then
         HashSet<String> expected = new HashSet<>();
-        expected.add(";");
+        expected.add(":");
         expected.add(",");
         expected.add("@");
 
@@ -109,7 +109,7 @@ public class ExtractorTest {
     @DisplayName("숫자 추출 - 다중 숫자")
     void extractNumbersMultipleNumbers() {
         // given
-        String[] input = new String[]{"1,2;3,4", "1,2;3add4"};
+        String[] input = new String[]{"1,2:3,4", "1,2:3add4"};
 
         // when & then
         Integer[] expected = new Integer[]{1, 2, 3, 4};
