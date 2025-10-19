@@ -13,7 +13,7 @@ public class Verifier {
     private static final int PREFIX_LENGTH = PREFIX.length();
     private static final int SUFFIX_LENGTH = SUFFIX.length();
 
-    private static final Pattern NOT_ALLOWED_PATTERN = Pattern.compile(
+    private static final Pattern NOT_ALLOWED_CUSTOM_DELIMITER = Pattern.compile(
             "\\d"+"|"+          // 숫자
             PREFIX+"|"+ // PREFIX
             SUFFIX     // SUFFIX
@@ -26,47 +26,33 @@ public class Verifier {
      * @return boolean 올바른 형식인지 여부
      */
     public boolean verifyCustomDelimiterDomain(String customDelimiterDomain) {
-
         if (customDelimiterDomain.isEmpty()) {
             return true;
         }
 
-        if (customDelimiterDomain.startsWith(PREFIX)) {// PREFIX로 시작하는지 확인
-            boolean isOpen = true;
-            int currentIndex = PREFIX_LENGTH; // PREFIX 다음 인덱스부터 시작
-            while (currentIndex < customDelimiterDomain.length() - 1) {
-                if (isOpen) {
-                    int nextPrefixIndex = customDelimiterDomain.indexOf(PREFIX, currentIndex);
-                    int nextSuffixIndex = customDelimiterDomain.indexOf(SUFFIX, currentIndex);
+        while(customDelimiterDomain.startsWith(PREFIX)){
+            int nextSuffixIndex = customDelimiterDomain.indexOf(SUFFIX);
 
-                    // currentIndex 이후로 PREFIX가 존재할 때 SUFFIX보다 앞에 있으면 오류
-                    if (nextPrefixIndex < nextSuffixIndex && nextPrefixIndex != -1) {
-                        return false;
-                    }
-
-                    // currentIndex부터 nextSuffixIndex까지가 새로운 구분자
-                    String newDelimiter = customDelimiterDomain.substring(currentIndex, nextSuffixIndex);
-
-                    // 구분자에 숫자 혹은 PREFIX 또는 SUFFIX가 포함되어 있으면 오류
-                    if (NOT_ALLOWED_PATTERN.matcher(newDelimiter).find()) {
-                        return false;
-                    }
-
-                    currentIndex = nextSuffixIndex + SUFFIX_LENGTH;
-                    isOpen = false;
-                } else {
-                    int nextPrefixIndex = customDelimiterDomain.indexOf(PREFIX, currentIndex);
-
-                    // 구분자 영역이 닫힌 상태에서 currentIndex가 PREFIX가 아닌 다른 문자로 시작하면 오류
-                    if (nextPrefixIndex != currentIndex) {
-                        return false;
-                    }
-                    currentIndex = nextPrefixIndex + PREFIX_LENGTH;
-                    isOpen = true;
-                }
+            // SUFFIX가 존재하지 않으면 올바르지 않은 형식
+            if(nextSuffixIndex == -1){
+                return false;
             }
-            return true;
+
+            // 구분자에 숫자, PREFIX 또는 SUFFIX가 포함되어 있으면 올바르지 않은 형식
+            String newDelimiter = customDelimiterDomain.substring(PREFIX_LENGTH, nextSuffixIndex);
+            if (NOT_ALLOWED_CUSTOM_DELIMITER.matcher(newDelimiter).find()) {
+                return false;
+            }
+
+            // 다음 SUFFIX가 마지막 SUFFIX라면 검증 종료(올바른 형식)
+            if(nextSuffixIndex + SUFFIX_LENGTH >= customDelimiterDomain.length()){
+                return true;
+            }
+
+            // 다음 SUFFIX 이후로 계속 검사
+            customDelimiterDomain = customDelimiterDomain.substring(nextSuffixIndex + SUFFIX_LENGTH);
         }
+
         return false;
     }
 
