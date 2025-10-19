@@ -13,7 +13,7 @@ public class Application {
         System.out.println("덧셈할 문자열을 입력해 주세요.");
         String userInput = Console.readLine();
 
-        // 1. 도메인 분리
+        // 1. 도메인 분리(0: 커스텀 구분자 영역, 1: 숫자 및 구분자 영역)
         String[] domains = domainDivider.divideDomain(userInput);
 
         // 2. 커스텀 구분자 영역 검증
