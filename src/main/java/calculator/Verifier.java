@@ -69,36 +69,40 @@ public class Verifier {
         }
 
         // 구분자가 맨 앞이나 맨 뒤에 오는지 확인
-        if (!Character.isDigit(input.charAt(0)) || !Character.isDigit(input.charAt(input.length() - 1))) {
+        if (!Character.isDigit(input.charAt(0)) ||
+            !Character.isDigit(input.charAt(input.length() - 1))) {
             return false;
         }
 
-        // 구분자가 연속으로 오는지 확인
+        // 구분자들이 모두 등록된 구분자인지 확인
         for (int currentIndex = 0; currentIndex < input.length(); currentIndex++) {
             // 숫자가 오면 다음 인덱스로
             if (Character.isDigit(input.charAt(currentIndex))) {
                 continue;
             }
 
-            String currentDelimiter = null;
-            // 숫자가 아닌 문자가 오면 다음 숫자가 나오는 위치를 찾는다
-            for (int nextDigitIndex = currentIndex; nextDigitIndex < input.length(); nextDigitIndex++) {
-                if (Character.isDigit(input.charAt(nextDigitIndex))) {
-                    // 다음 숫자까지가 구분자 영역
-                    currentDelimiter = input.substring(currentIndex, nextDigitIndex);
-                    currentIndex = nextDigitIndex;
-                    break;
-                }
-                if (nextDigitIndex == input.length() - 1) {
-                    return false;
-                }
-            }
+            // 구분자는 현재 위치부터 다음 숫자 전 위치까지
+            int nextDigitIndex = findNextDigitIndex(input, currentIndex);
+            String currentDelimiter = input.substring(currentIndex, nextDigitIndex);
 
             // 찾은 구분자가 등록된 구분자인지 확인
-            if (currentDelimiter == null || !delimiters.contains(currentDelimiter)) {
+            if (!delimiters.contains(currentDelimiter)) {
                 return false;
             }
+
+            // 다음 숫자 위치로 인덱스 이동
+            currentIndex = nextDigitIndex;
         }
+
         return true;
+    }
+
+    private int findNextDigitIndex(String input, int startIndex) {
+        for (int i = startIndex; i < input.length(); i++) {
+            if (Character.isDigit(input.charAt(i))) {
+                return i;
+            }
+        }
+        return -1;
     }
 }
